@@ -16,6 +16,13 @@ class GameUpdate {
   board: Board
 }
 
+// function to add moves to the board, should be somewhere else
+function move(currentBoard, row, column, symbol) {
+  let newBoard = [...currentBoard]
+  newBoard[row-1][column-1] = symbol
+  return newBoard
+}
+
 @JsonController()
 export default class GameController {
 
@@ -25,15 +32,25 @@ export default class GameController {
   async createGame(
     @CurrentUser() user: User
   ) {
-    const entity = await Game.create().save()
+    const entity = await Game.create()
+    .save()
 
-    await Player.create({
+    const player = await Player.create({
       game: entity, 
       user,
-      symbol: 'x'
+      symbol: 'x',
+      position_row: 3,
+      position_column: 3
     }).save()
 
-    const game = await Game.findOneById(entity.id)
+    console.log(entity, 'im the entity')
+
+    const game: any = await Game.findOneById(entity.id)
+    console.log(game, 'im the game')
+
+    game.board = move(game.board, player.position_row, player.position_column, player.symbol)
+    await game.save()
+    console.log(game, 'im the game after update')
 
     io.emit('action', {
       type: 'ADD_GAME',
@@ -50,7 +67,7 @@ export default class GameController {
     @CurrentUser() user: User,
     @Param('id') gameId: number
   ) {
-    const game = await Game.findOneById(gameId)
+    const game:any = await Game.findOneById(gameId)
     if (!game) throw new BadRequestError(`Game does not exist`)
     if (game.status !== 'pending') throw new BadRequestError(`Game is already started`)
 
@@ -60,8 +77,13 @@ export default class GameController {
     const player = await Player.create({
       game, 
       user,
-      symbol: 'o'
+      symbol: 'o',
+      position_row: 6,
+      position_column: 6
     }).save()
+
+    game.board = move(game.board, player.position_row, player.position_column, player.symbol)
+    await game.save()
 
     io.emit('action', {
       type: 'UPDATE_GAME',
