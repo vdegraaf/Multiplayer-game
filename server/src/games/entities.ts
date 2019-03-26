@@ -52,4 +52,10 @@ export class Player extends BaseEntity {
 
   @Column('integer', { name: 'user_id' })
   userId: number
+
+  @Column({nullable: true})
+  position_row: number
+
+  @Column({nullable: true})
+  position_column: number
 }
