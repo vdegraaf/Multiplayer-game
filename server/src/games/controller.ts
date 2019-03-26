@@ -43,14 +43,10 @@ export default class GameController {
       position_column: 3
     }).save()
 
-    console.log(entity, 'im the entity')
-
     const game: any = await Game.findOneById(entity.id)
-    console.log(game, 'im the game')
-
+    
     game.board = move(game.board, player.position_row, player.position_column, player.symbol)
     await game.save()
-    console.log(game, 'im the game after update')
 
     io.emit('action', {
       type: 'ADD_GAME',
@@ -75,12 +71,13 @@ export default class GameController {
     await game.save()
 
     const player = await Player.create({
-      game, 
       user,
       symbol: 'o',
       position_row: 6,
       position_column: 6
-    }).save()
+    })
+    player.game = game
+    player.save()
 
     game.board = move(game.board, player.position_row, player.position_column, player.symbol)
     await game.save()

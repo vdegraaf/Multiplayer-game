@@ -35,6 +35,8 @@ class GameDetails extends PureComponent {
 
   render() {
     const {game, users, authenticated, userId} = this.props
+    console.log('game test:', game)
+    console.log('userId test:', userId)
 
     if (!authenticated) return (
 			<Redirect to="/login" />
@@ -44,6 +46,7 @@ class GameDetails extends PureComponent {
     if (!game) return 'Not found'
 
     const player = game.players.find(p => p.userId === userId)
+    console.log('player test:', player)
 
     const winner = game.players
       .filter(p => p.symbol === game.winner)
