@@ -2,13 +2,28 @@ import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, M
 import User from '../users/entity'
 
 export type Symbol = 'x' | 'o'
-export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
-export type Board = [ Row, Row, Row ]
+// export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
+// export type Board = [ Row, Row, Row ]
 
 type Status = 'pending' | 'started' | 'finished'
 
-const emptyRow: Row = [null, null, null]
-const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
+// const emptyRow: Row = [null, null, null,]
+// const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
+//type Board = string[][];
+
+const defaultBoard = [
+    [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+   
+];
 
 @Entity()
 export class Game extends BaseEntity {
@@ -16,8 +31,8 @@ export class Game extends BaseEntity {
   @PrimaryGeneratedColumn()
   id?: number
 
-  @Column('json', {default: emptyBoard})
-  board: Board
+  @Column('json', {default: defaultBoard})
+  board
 
   @Column('char', {length:1, default: 'x'})
   turn: Symbol
@@ -50,6 +65,6 @@ export class Player extends BaseEntity {
   @Column('char', {length: 1})
   symbol: Symbol
 
-  // @Column('integer', { name: 'user_id' })
-  // userId: number
+  @Column('integer', { name: 'user_id' })
+  userId: number
 }
