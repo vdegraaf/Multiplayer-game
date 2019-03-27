@@ -19,7 +19,7 @@ class GameUpdate {
 // function to add moves to the board, should be somewhere else
 function move(currentBoard, row, column, symbol) {
   let newBoard = [...currentBoard]
-  newBoard[row-1][column-1] = symbol
+  newBoard[row][column] = symbol
   return newBoard
 }
 
