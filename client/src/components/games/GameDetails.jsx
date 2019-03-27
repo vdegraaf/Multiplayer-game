@@ -52,16 +52,38 @@ handleKeyPress = (event) => {
   makeMove = (player, move) => {
     
     const {game, updateGame} = this.props
-    const Board = game.board
-    const newBoard = [...Board]
+//     const Board = game.board
+//     const newBoard = [...Board]
     
     player.position_row = player.position_row +move.y
     player.position_column = player.position_column +move.x
 
-    newBoard[player.position_row][player.position_column] = player.symbol
+        const plainBoard = game.board.map(row => row.map(cell => {
+      if (cell === game.turn) {
+        return cell = null
+      }
+      if (cell === null) {
+        return cell = null
+      } if (cell !== game.turn) {
+        return cell
+      }
+    }))
 
-    updateGame(game.id, newBoard, player)
+//     const board = plainBoard.map(
+//       (row, rowIndex) => row.map((cell, cellIndex) => {
+//         if (rowIndex === toRow && cellIndex === toCell) return game.turn
+//         else return cell
+//       })
+//     )
+
+    plainBoard[player.position_row][player.position_column] = player.symbol
+
+    updateGame(game.id, plainBoard, player)
   }
+
+  
+<!--     updateGame(game.id, board) 
+  } -->
 
 
   render() {
