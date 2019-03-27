@@ -108,7 +108,9 @@ export default class GameController {
     
     if (!player) throw new ForbiddenError(`You are not part of this game`)
     if (game.status !== 'started') throw new BadRequestError(`The game is not started yet`)
-    if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
+    
+    // if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
+
     // if (!isValidTransition(player.symbol, game.board, update.board)) {
     //   throw new BadRequestError(`Invalid move`)
     // }    
@@ -129,7 +131,7 @@ export default class GameController {
       game.board = update.board
       player.position_column = update.player.position_column
       player.position_row = update.player.position_row
-      game.turn = player.symbol === 'x' ? 'o' : 'x'
+      // game.turn = player.symbol === 'x' ? 'o' : 'x'
     }
     
     await player.save()
