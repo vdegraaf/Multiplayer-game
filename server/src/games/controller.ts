@@ -108,7 +108,7 @@ export default class GameController {
     const player: any = await Player.findOne({ user, game })
   
    
-    // if (!player) throw new ForbiddenError(`You are not part of this game`)
+    if (!player) throw new ForbiddenError(`You are not part of this game`)
     if (game.status !== 'started') throw new BadRequestError(`The game is not started yet`)
     
     // if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
@@ -128,7 +128,7 @@ export default class GameController {
     // }
     
     if(update.player){
-      console.log('hallooo')
+      
       player.position_column = update.player.position_column
       player.position_row = update.player.position_row
       await player.save()
