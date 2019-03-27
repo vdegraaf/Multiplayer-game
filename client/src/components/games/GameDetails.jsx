@@ -10,8 +10,6 @@ import './GameDetails.css'
 import moves from './Logic'
 
 
-
-
 class GameDetails extends PureComponent {
 constructor(props){
   super(props)
@@ -22,17 +20,16 @@ handleKeyPress = (event) => {
   const {game, userId} = this.props
   const player = game.players.find(p => p.userId === userId)
   if(event.keyCode === 38){
-    console.log(player, 'im the player')
-    this.makeMove2(player, moves.UP)
+    this.makeMove(player, moves.UP)
   }
   if(event.keyCode === 37){
-    console.log('pressed left')
+    this.makeMove(player, moves.LEFT)
   }
   if(event.keyCode === 40){
-    console.log('pressed down')
+    this.makeMove(player, moves.DOWN)
   }
   if(event.keyCode === 39){
-    console.log('pressed right')
+    this.makeMove(player, moves.RIGHT)
   }
 }
   componentDidMount(){
@@ -52,39 +49,19 @@ handleKeyPress = (event) => {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  // makeMove = (toRow, toCell) => {
-  //   const {game, updateGame} = this.props
-
-  //   const board = game.board.map(
-  //     (row, rowIndex) => row.map((cell, cellIndex) => {
-  //       if (rowIndex === toRow && cellIndex === toCell) return game.turn
-  //       else return cell
-  //     })
-  //   )
-  //   updateGame(game.id, board)
-  // }
-
-  // move is UP,DOWN,LEFT,RIGHT with x and y coordinates
-  makeMove2 = (player, move) => {
+  makeMove = (player, move) => {
     
-    console.log(player, 'im the player BEFORE postion')
     const {game, updateGame} = this.props
     const Board = game.board
     const newBoard = [...Board]
-    console.log(newBoard, 'im the current board')
     
     player.position_row = player.position_row +move.y
     player.position_column = player.position_column +move.x
 
+    newBoard[player.position_row][player.position_column] = player.symbol
 
-    newBoard[player.position_row][player.position_column] = 'v'
-
-    console.log(player, 'im the player after new postion')
-    console.log(newBoard, 'im the new board')
-    // return newBoard
-    updateGame(game.id, newBoard)
+    updateGame(game.id, newBoard, player)
   }
-
 
 
   render() {
