@@ -54,19 +54,19 @@ handleKeyPress = (event) => {
     const {game, updateGame} = this.props
 
 
-    console.log(game.turn, 'im the game.turn')
+    console.log(player, 'im the player that makes a move')
     player.position_row = player.position_row +move.y
     player.position_column = player.position_column +move.x
 
     
 
     const newBoard = game.board.map(row => row.map(cell => {
-        if (cell === game.turn) {
+        if (cell === player.symbol) {
           return cell = null
         }
         if (cell === null) {
           return cell = null
-        } if (cell !== game.turn) {
+        } if (cell !== player.symbol) {
           return cell
         }
       }))
