@@ -111,14 +111,15 @@ handleKeyPress = (event) => {
     return (
     <Paper className="outer-paper">
       <input/>
-      <h1>Game #{game.id}</h1>
+      <h1>Game #{game.id}</h1> 
 
       <p>Status: {game.status}</p>
 
       {
         game.status === 'started' &&
-        player && player.symbol === game.turn &&
-        <div>It's your turn!</div>
+        player && player.symbol === game.turn 
+        &&
+        <p>It's your turn!</p>
       }
 
       {
