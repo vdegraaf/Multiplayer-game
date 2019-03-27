@@ -72,6 +72,7 @@ export const updateGame = (gameId, board) => (dispatch, getState) => {
   const state = getState()
   const jwt = state.currentUser.jwt
 
+  console.log(gameId, board, 'halloooo patch')
   if (isExpired(jwt)) return dispatch(logout())
 
   request

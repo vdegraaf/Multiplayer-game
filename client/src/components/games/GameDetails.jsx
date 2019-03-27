@@ -7,8 +7,41 @@ import {userId} from '../../jwt'
 import Paper from '@material-ui/core/Paper'
 import Board from './Board'
 import './GameDetails.css'
+import moves from './Logic'
+
+
+
 
 class GameDetails extends PureComponent {
+constructor(props){
+  super(props)
+  this.keyPress = this.handleKeyPress.bind(this)
+}
+
+handleKeyPress = (event) => {
+  const {game, userId} = this.props
+  const player = game.players.find(p => p.userId === userId)
+  if(event.keyCode === 38){
+    console.log(player, 'im the player')
+    this.makeMove2(player, moves.UP)
+  }
+  if(event.keyCode === 37){
+    console.log('pressed left')
+  }
+  if(event.keyCode === 40){
+    console.log('pressed down')
+  }
+  if(event.keyCode === 39){
+    console.log('pressed right')
+  }
+}
+  componentDidMount(){
+    document.addEventListener("keydown", this.handleKeyPress, false)
+  }
+
+  componentWillUnmount(){
+    document.removeEventListener("keydown", this.handleKeyPress, false);
+  }
 
   componentWillMount() {
     if (this.props.authenticated) {
@@ -19,24 +52,43 @@ class GameDetails extends PureComponent {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  makeMove = (toRow, toCell) => {
-    const {game, updateGame} = this.props
+  // makeMove = (toRow, toCell) => {
+  //   const {game, updateGame} = this.props
 
-    const board = game.board.map(
-      (row, rowIndex) => row.map((cell, cellIndex) => {
-        if (rowIndex === toRow && cellIndex === toCell) return game.turn
-        else return cell
-      })
-    )
-    updateGame(game.id, board)
+  //   const board = game.board.map(
+  //     (row, rowIndex) => row.map((cell, cellIndex) => {
+  //       if (rowIndex === toRow && cellIndex === toCell) return game.turn
+  //       else return cell
+  //     })
+  //   )
+  //   updateGame(game.id, board)
+  // }
+
+  // move is UP,DOWN,LEFT,RIGHT with x and y coordinates
+  makeMove2 = (player, move) => {
+    
+    console.log(player, 'im the player BEFORE postion')
+    const {game, updateGame} = this.props
+    const Board = game.board
+    const newBoard = [...Board]
+    console.log(newBoard, 'im the current board')
+    
+    player.position_row = player.position_row +move.y
+    player.position_column = player.position_column +move.x
+
+
+    newBoard[player.position_row][player.position_column] = 'v'
+
+    console.log(player, 'im the player after new postion')
+    console.log(newBoard, 'im the new board')
+    // return newBoard
+    updateGame(game.id, newBoard)
   }
 
 
 
   render() {
     const {game, users, authenticated, userId} = this.props
-    console.log('game test:', game)
-    console.log('userId test:', userId)
 
     if (!authenticated) return (
 			<Redirect to="/login" />
@@ -46,13 +98,14 @@ class GameDetails extends PureComponent {
     if (!game) return 'Not found'
 
     const player = game.players.find(p => p.userId === userId)
-    console.log('player test:', player)
 
     const winner = game.players
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
 
-    return (<Paper className="outer-paper">
+    return (
+    <Paper className="outer-paper">
+      <input/>
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>

@@ -100,11 +100,12 @@ export default class GameController {
     @Param('id') gameId: number,
     @Body() update: GameUpdate
   ) {
-    const game = await Game.findOneById(gameId)
+    console.log('im the patch in the server')
+    const game: any = await Game.findOneById(gameId)
     if (!game) throw new NotFoundError(`Game does not exist`)
 
     const player = await Player.findOne({ user, game })
-
+    
     if (!player) throw new ForbiddenError(`You are not part of this game`)
     if (game.status !== 'started') throw new BadRequestError(`The game is not started yet`)
     if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
@@ -112,6 +113,7 @@ export default class GameController {
     //   throw new BadRequestError(`Invalid move`)
     // }    
 
+    // if you comment out these two, the player does not changes turns again
     const winner = calculateWinner(update.board)
     if (winner) {
       game.winner = winner
@@ -120,10 +122,18 @@ export default class GameController {
     else if (finished(update.board)) {
       game.status = 'finished'
     }
+
+    // when player presses UP, this function should run 1) update the position 2) update the board and send to dispatch
+    if(update.board){
+      console.log(game.board, 'im the game.board')
+      console.log(update.board, 'im the update.board')
+      game.board = update.board
+    }
+
     else {
       game.turn = player.symbol === 'x' ? 'o' : 'x'
     }
-    game.board = update.board
+    
     await game.save()
     
     io.emit('action', {
