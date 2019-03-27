@@ -55,6 +55,9 @@ handleKeyPress = (event) => {
 
 
     console.log(player, 'im the player that makes a move')
+    console.log(player.position_row, 'row',player.position_column, 'column' )    
+    console.log(move.y, 'move.y', move.x, 'move.x')
+
     player.position_row = player.position_row +move.y
     player.position_column = player.position_column +move.x
 
