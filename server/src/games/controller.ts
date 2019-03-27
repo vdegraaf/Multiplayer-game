@@ -127,7 +127,7 @@ export default class GameController {
 
   
     if(update.board){
-  
+  console.log('vin')
       game.board = update.board
       player.position_column = update.player.position_column
       player.position_row = update.player.position_row
