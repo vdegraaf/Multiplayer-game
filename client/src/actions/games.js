@@ -71,11 +71,7 @@ export const createGame = () => (dispatch, getState) => {
 export const updateGame = (gameId, board, player) => (dispatch, getState) => {
   const state = getState()
   const jwt = state.currentUser.jwt
-<<<<<<< feat/user-move
-  
-=======
 console.log('gameid', gameId, board, 'board')
->>>>>>> development
   if (isExpired(jwt)) return dispatch(logout())
 
   request

@@ -52,31 +52,6 @@ handleKeyPress = (event) => {
   makeMove = (player, move) => {
     
     const {game, updateGame} = this.props
-<<<<<<< HEAD
-//     const Board = game.board
-//     const newBoard = [...Board]
-    
-    player.position_row = player.position_row +move.y
-    player.position_column = player.position_column +move.x
-
-        const plainBoard = game.board.map(row => row.map(cell => {
-      if (cell === game.turn) {
-        return cell = null
-      }
-      if (cell === null) {
-        return cell = null
-      } if (cell !== game.turn) {
-        return cell
-      }
-    }))
-
-//     const board = plainBoard.map(
-//       (row, rowIndex) => row.map((cell, cellIndex) => {
-//         if (rowIndex === toRow && cellIndex === toCell) return game.turn
-//         else return cell
-//       })
-//     )
-=======
 
 
     console.log(game.turn, 'im the game.turn')
@@ -97,16 +72,12 @@ handleKeyPress = (event) => {
       }))
 
     newBoard[player.position_row][player.position_column] = player.symbol
->>>>>>> feat/user-move
 
-    plainBoard[player.position_row][player.position_column] = player.symbol
 
-    updateGame(game.id, plainBoard, player)
+    updateGame(game.id, newBoard, player)
   }
 
-  
-<!--     updateGame(game.id, board) 
-  } -->
+
 
 
 
