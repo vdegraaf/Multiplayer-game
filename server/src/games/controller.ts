@@ -103,10 +103,12 @@ export default class GameController {
 
     const game: any = await Game.findOneById(gameId)
     if (!game) throw new NotFoundError(`Game does not exist`)
+    
 
     const player: any = await Player.findOne({ user, game })
-    
-    if (!player) throw new ForbiddenError(`You are not part of this game`)
+  
+   
+    // if (!player) throw new ForbiddenError(`You are not part of this game`)
     if (game.status !== 'started') throw new BadRequestError(`The game is not started yet`)
     
     // if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
@@ -124,22 +126,37 @@ export default class GameController {
     // else if (finished(update.board)) {  
     //   game.status = 'finished'
     // }
-
-  
-    if(update.board){
-  console.log('vin')
-      game.board = update.board
+    
+    if(update.player){
+      console.log('hallooo')
       player.position_column = update.player.position_column
       player.position_row = update.player.position_row
+      await player.save()
+    }
+  
+    const game2: any = await Game.findOneById(gameId)
+    if(update.board){
+      
+      game2.board = update.board
+     
       // game.turn = player.symbol === 'x' ? 'o' : 'x'
+
+      
     }
     
-    await player.save()
-    await game.save()
     
+    await game2.save()
+    
+
+    // console.log(player, 'im the player saved in DB')
+    // console.log(game, 'im the game saved in DB')
+    // GAME NEEDS TO SYNCHRONIZE WITH PLAYER HERE!!
+    // game.player is not equal to player saved in DB, 
+    // so Redux is behind
+
     io.emit('action', {
       type: 'UPDATE_GAME',
-      payload: game
+      payload: game2
     })
 
     return game
