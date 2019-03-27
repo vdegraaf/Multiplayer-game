@@ -131,7 +131,7 @@ export default class GameController {
       game.board = update.board
       player.position_column = update.player.position_column
       player.position_row = update.player.position_row
-      // game.turn = player.symbol === 'x' ? 'o' : 'x'
+      game.turn = player.symbol === 'x' ? 'o' : 'x'
     }
     
     await player.save()
