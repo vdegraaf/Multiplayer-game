@@ -17,8 +17,6 @@ constructor(props){
   this.keyPress = this.handleKeyPress.bind(this)
 }
 
-
-
   handleKeyPress = (event) => {
 
     if (event.keyCode === 38) {
@@ -56,8 +54,6 @@ constructor(props){
 
     const { game, userId, updateGame } = this.props
     const player = game.players.find(p => p.userId === userId)
-
-
 
     if (player.position_row + move.y >= 0 &&
       player.position_row + move.y <= 9 &&
@@ -113,11 +109,11 @@ constructor(props){
 
         <p>Status: {game.status}</p>
 
-        {
+        {/* {
           game.status === 'started' &&
           player && player.symbol === game.turn &&
           <div>It's your turn!</div>
-        }
+        } */}
 
         {
           game.status === 'pending' &&
@@ -125,10 +121,10 @@ constructor(props){
           <button onClick={this.joinGame}>Join Game</button>
         }
 
-        {
+        {/* {
           winner &&
           <p>Winner: {users[winner].firstName}</p>
-        }
+        } */}
 
         <hr />
 
