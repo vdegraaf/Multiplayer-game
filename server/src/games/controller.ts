@@ -16,6 +16,13 @@ class GameUpdate {
   board: Board
 }
 
+// function to add moves to the board, should be somewhere else
+function move(currentBoard, row, column, symbol) {
+  let newBoard = [...currentBoard]
+  newBoard[row][column] = symbol
+  return newBoard
+}
+
 @JsonController()
 export default class GameController {
 
@@ -25,15 +32,21 @@ export default class GameController {
   async createGame(
     @CurrentUser() user: User
   ) {
-    const entity = await Game.create().save()
+    const entity = await Game.create()
+    .save()
 
-    await Player.create({
+    const player = await Player.create({
       game: entity, 
       user,
-      symbol: 'x'
+      symbol: 'x',
+      position_row: 3,
+      position_column: 3
     }).save()
 
-    const game = await Game.findOneById(entity.id)
+    const game: any = await Game.findOneById(entity.id)
+    
+    game.board = move(game.board, player.position_row, player.position_column, player.symbol)
+    await game.save()
 
     io.emit('action', {
       type: 'ADD_GAME',
@@ -50,7 +63,7 @@ export default class GameController {
     @CurrentUser() user: User,
     @Param('id') gameId: number
   ) {
-    const game = await Game.findOneById(gameId)
+    const game:any = await Game.findOneById(gameId)
     if (!game) throw new BadRequestError(`Game does not exist`)
     if (game.status !== 'pending') throw new BadRequestError(`Game is already started`)
 
@@ -58,10 +71,16 @@ export default class GameController {
     await game.save()
 
     const player = await Player.create({
-      game, 
       user,
-      symbol: 'o'
-    }).save()
+      symbol: 'o',
+      position_row: 6,
+      position_column: 6
+    })
+    player.game = game
+    player.save()
+
+    game.board = move(game.board, player.position_row, player.position_column, player.symbol)
+    await game.save()
 
     io.emit('action', {
       type: 'UPDATE_GAME',
@@ -79,37 +98,65 @@ export default class GameController {
   async updateGame(
     @CurrentUser() user: User,
     @Param('id') gameId: number,
-    @Body() update: GameUpdate
+    @Body() update
   ) {
-    const game = await Game.findOneById(gameId)
+
+    const game: any = await Game.findOneById(gameId)
     if (!game) throw new NotFoundError(`Game does not exist`)
+    
 
-    const player = await Player.findOne({ user, game })
-
+    const player: any = await Player.findOne({ user, game })
+  
+   
     if (!player) throw new ForbiddenError(`You are not part of this game`)
     if (game.status !== 'started') throw new BadRequestError(`The game is not started yet`)
-    if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
-    if (!isValidTransition(player.symbol, game.board, update.board)) {
-      throw new BadRequestError(`Invalid move`)
-    }    
-
-    const winner = calculateWinner(update.board)
-    if (winner) {
-      game.winner = winner
-      game.status = 'finished'
-    }
-    else if (finished(update.board)) {
-      game.status = 'finished'
-    }
-    else {
-      game.turn = player.symbol === 'x' ? 'o' : 'x'
-    }
-    game.board = update.board
-    await game.save()
     
+    // if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
+
+    // if (!isValidTransition(player.symbol, game.board, update.board)) {
+    //   throw new BadRequestError(`Invalid move`)
+    // }    
+
+
+    // const winner = calculateWinner(update.board)
+    // if (winner) {
+    //   game.winner = winner
+    //   game.status = 'finished'
+    // }
+    // else if (finished(update.board)) {  
+    //   game.status = 'finished'
+    // }
+    
+    if(update.player){
+      
+      player.position_column = update.player.position_column
+      player.position_row = update.player.position_row
+      await player.save()
+    }
+  
+    const game2: any = await Game.findOneById(gameId)
+    if(update.board){
+      
+      game2.board = update.board
+     
+      // game.turn = player.symbol === 'x' ? 'o' : 'x'
+
+      
+    }
+    
+    
+    await game2.save()
+    
+
+    // console.log(player, 'im the player saved in DB')
+    // console.log(game, 'im the game saved in DB')
+    // GAME NEEDS TO SYNCHRONIZE WITH PLAYER HERE!!
+    // game.player is not equal to player saved in DB, 
+    // so Redux is behind
+
     io.emit('action', {
       type: 'UPDATE_GAME',
-      payload: game
+      payload: game2
     })
 
     return game

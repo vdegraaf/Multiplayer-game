@@ -7,8 +7,39 @@ import {userId} from '../../jwt'
 import Paper from '@material-ui/core/Paper'
 import Board from './Board'
 import './GameDetails.css'
+import moves from './Logic'
+
 
 class GameDetails extends PureComponent {
+constructor(props){
+  super(props)
+  this.keyPress = this.handleKeyPress.bind(this)
+}
+
+handleKeyPress = (event) => {
+  // const {game, userId} = this.props
+  // const player = game.players.find(p => p.userId === userId)
+  // hij haalt hier de player uit GAME ipv DATABSAE
+  if(event.keyCode === 38){
+    this.makeMove(moves.UP)
+  }
+  if(event.keyCode === 37){
+    this.makeMove(moves.LEFT)
+  }
+  if(event.keyCode === 40){
+    this.makeMove(moves.DOWN)
+  }
+  if(event.keyCode === 39){
+    this.makeMove( moves.RIGHT)
+  }
+}
+  componentDidMount(){
+    document.addEventListener("keydown", this.handleKeyPress, false)
+  }
+
+  componentWillUnmount(){
+    document.removeEventListener("keydown", this.handleKeyPress, false);
+  }
 
   componentWillMount() {
     if (this.props.authenticated) {
@@ -19,18 +50,29 @@ class GameDetails extends PureComponent {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  makeMove = (toRow, toCell) => {
-    const {game, updateGame} = this.props
+  makeMove = (move) => {
+    
+    const {game, userId, updateGame} = this.props
+    const player = game.players.find(p => p.userId === userId)
 
-    const board = game.board.map(
-      (row, rowIndex) => row.map((cell, cellIndex) => {
-        if (rowIndex === toRow && cellIndex === toCell) return game.turn
-        else return cell
-      })
-    )
-    updateGame(game.id, board)
+    player.position_row = player.position_row +move.y
+    player.position_column = player.position_column +move.x
+
+    const newBoard = game.board.map(row => row.map(cell => {
+        if (cell === player.symbol) {
+          return cell = null
+        }
+        if (cell === null) {
+          return cell = null
+        } if (cell !== player.symbol) {
+          return cell
+        }
+      }))
+
+    newBoard[player.position_row][player.position_column] = player.symbol
+
+    updateGame(game.id, newBoard, player)
   }
-
 
 
   render() {
@@ -49,7 +91,9 @@ class GameDetails extends PureComponent {
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
 
-    return (<Paper className="outer-paper">
+    return (
+    <Paper className="outer-paper">
+      <input/>
       <h1>Game #{game.id}</h1>
 
       <p>Status: {game.status}</p>

@@ -2,13 +2,13 @@ import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, M
 import User from '../users/entity'
 
 export type Symbol = 'x' | 'o'
-export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
-export type Board = [ Row, Row, Row ]
+export type Row = [ Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null ]
+export type Board = [ Row, Row, Row, Row, Row, Row, Row, Row, Row, Row ]
 
 type Status = 'pending' | 'started' | 'finished'
 
-const emptyRow: Row = [null, null, null]
-const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
+const emptyRow: Row = [null, null, null, null, null, null, null, null, null, null, null, null]
+const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow, emptyRow, emptyRow, emptyRow , emptyRow, emptyRow, emptyRow , emptyRow ]
 
 @Entity()
 export class Game extends BaseEntity {
@@ -32,6 +32,7 @@ export class Game extends BaseEntity {
   // http://typeorm.io/#/many-to-one-one-to-many-relations
   @OneToMany(_ => Player, player => player.game, {eager:true})
   players: Player[]
+  // There might be something worng with this relation, it does not update with the proper Player Position form DB
 }
 
 @Entity()
@@ -50,6 +51,12 @@ export class Player extends BaseEntity {
   @Column('char', {length: 1})
   symbol: Symbol
 
-  // @Column('integer', { name: 'user_id' })
-  // userId: number
+  @Column('integer', { name: 'user_id' })
+  userId: number
+
+  @Column({nullable: true})
+  position_row: number
+
+  @Column({nullable: true})
+  position_column: number
 }
