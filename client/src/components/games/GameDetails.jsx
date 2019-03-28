@@ -109,11 +109,11 @@ constructor(props){
 
         <p>Status: {game.status}</p>
 
-        {
+        {/* {
           game.status === 'started' &&
           player && player.symbol === game.turn &&
           <div>It's your turn!</div>
-        }
+        } */}
 
         {
           game.status === 'pending' &&
@@ -121,10 +121,10 @@ constructor(props){
           <button onClick={this.joinGame}>Join Game</button>
         }
 
-        {
+        {/* {
           winner &&
           <p>Winner: {users[winner].firstName}</p>
-        }
+        } */}
 
         <hr />
 
