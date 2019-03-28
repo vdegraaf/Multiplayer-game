@@ -42,8 +42,8 @@ export default class GameController {
       game: entity,
       user,
       symbol: 'x',
-      position_row: 3,
-      position_column: 3
+      position_row: 4,
+      position_column: 0
     }).save()
 
     const game: any = await Game.findOneById(entity.id)
@@ -78,8 +78,8 @@ export default class GameController {
     const player = await Player.create({
       user,
       symbol: 'o',
-      position_row: 6,
-      position_column: 6
+      position_row: 4,
+      position_column: 22
     })
     player.game = game
     player.save()

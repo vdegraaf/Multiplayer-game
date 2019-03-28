@@ -17,8 +17,6 @@ constructor(props){
   this.keyPress = this.handleKeyPress.bind(this)
 }
 
-
-
   handleKeyPress = (event) => {
 
     if (event.keyCode === 38) {
@@ -56,8 +54,6 @@ constructor(props){
 
     const { game, userId, updateGame } = this.props
     const player = game.players.find(p => p.userId === userId)
-
-
 
     if (player.position_row + move.y >= 0 &&
       player.position_row + move.y <= 9 &&
