@@ -1,12 +1,12 @@
-import { 
-  JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get, 
-  Body, Patch 
+import {
+  JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get,
+  Body, Patch
 } from 'routing-controllers'
 import User from '../users/entity'
 import { Game, Player, Board } from './entities'
-import {IsBoard, isValidTransition, calculateWinner, finished} from './logic'
+import { IsBoard, isValidTransition, calculateWinner, finished } from './logic'
 import { Validate } from 'class-validator'
-import {io} from '../index'
+import { io } from '../index'
 
 class GameUpdate {
 
@@ -19,7 +19,9 @@ class GameUpdate {
 // function to add moves to the board, should be somewhere else
 function move(currentBoard, row, column, symbol) {
   let newBoard = [...currentBoard]
+
   newBoard[row][column] = symbol
+
   return newBoard
 }
 
@@ -33,10 +35,10 @@ export default class GameController {
     @CurrentUser() user: User
   ) {
     const entity = await Game.create()
-    .save()
+      .save()
 
     const player = await Player.create({
-      game: entity, 
+      game: entity,
       user,
       symbol: 'x',
       position_row: 3,
@@ -44,7 +46,7 @@ export default class GameController {
     }).save()
 
     const game: any = await Game.findOneById(entity.id)
-    
+
     game.board = move(game.board, player.position_row, player.position_column, player.symbol)
     await game.save()
 
@@ -63,7 +65,7 @@ export default class GameController {
     @CurrentUser() user: User,
     @Param('id') gameId: number
   ) {
-    const game:any = await Game.findOneById(gameId)
+    const game: any = await Game.findOneById(gameId)
     if (!game) throw new BadRequestError(`Game does not exist`)
     if (game.status !== 'pending') throw new BadRequestError(`Game is already started`)
 
@@ -100,6 +102,8 @@ export default class GameController {
     @Param('id') gameId: number,
     @Body() update
   ) {
+
+
 
     const game: any = await Game.findOneById(gameId)
     if (!game) throw new NotFoundError(`Game does not exist`)
@@ -143,6 +147,7 @@ export default class GameController {
 
       
     }
+
     
     
     await game2.save()

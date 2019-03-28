@@ -71,6 +71,7 @@ handleKeyPress = (event) => {
 
     newBoard[player.position_row][player.position_column] = player.symbol
 
+
     updateGame(game.id, newBoard, player)
   }
 
