@@ -1,7 +1,7 @@
 import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, ManyToOne } from 'typeorm'
 import User from '../users/entity'
 
-export type Symbol = 'x' | 'o'
+export type Symbol = 'x' | 'o' | 'm'
 export type Row = [ Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null, Symbol | null ]
 export type Board = [ Row, Row, Row, Row, Row, Row, Row, Row, Row, Row ]
 
@@ -33,6 +33,11 @@ export class Game extends BaseEntity {
   @OneToMany(_ => Player, player => player.game, {eager:true})
   players: Player[]
   // There might be something worng with this relation, it does not update with the proper Player Position form DB
+
+  hallo = () => {
+    console.log('hallo')
+  }
+
 }
 
 @Entity()

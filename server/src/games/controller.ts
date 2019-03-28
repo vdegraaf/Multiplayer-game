@@ -4,17 +4,18 @@ import {
 } from 'routing-controllers'
 import User from '../users/entity'
 import { Game, Player, Board } from './entities'
-import { IsBoard, isValidTransition, calculateWinner, finished } from './logic'
+// import { IsBoard, isValidTransition, calculateWinner, finished } from './logic'
 import { Validate } from 'class-validator'
 import { io } from '../index'
 
-class GameUpdate {
 
-  @Validate(IsBoard, {
-    message: 'Not a valid board'
-  })
-  board: Board
-}
+// class GameUpdate {
+
+//   @Validate(IsBoard, {
+//     message: 'Not a valid board'
+//   })
+//   board: Board
+// }
 
 // function to add moves to the board, should be somewhere else
 function move(currentBoard, row, column, symbol) {
@@ -47,6 +48,8 @@ export default class GameController {
 
     const game: any = await Game.findOneById(entity.id)
 
+    // game.board = MonsterOneMove(game)
+    // console.log(game.board,'im the game.board after MonsterOneMove')
     game.board = move(game.board, player.position_row, player.position_column, player.symbol)
     await game.save()
 
@@ -108,7 +111,9 @@ export default class GameController {
     const game: any = await Game.findOneById(gameId)
     if (!game) throw new NotFoundError(`Game does not exist`)
     
+    
 
+    
     const player: any = await Player.findOne({ user, game })
   
    

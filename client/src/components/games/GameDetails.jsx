@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper'
 import Board from './Board'
 import './GameDetails.css'
 import moves from './Logic'
+import { MonsterOneMove } from './Monsters'
 
 
 class GameDetails extends PureComponent {
@@ -71,8 +72,9 @@ handleKeyPress = (event) => {
 
     newBoard[player.position_row][player.position_column] = player.symbol
 
+    const newBoard2 = MonsterOneMove(newBoard)
 
-    updateGame(game.id, newBoard, player)
+    updateGame(game.id, newBoard2, player)
   }
 
 
