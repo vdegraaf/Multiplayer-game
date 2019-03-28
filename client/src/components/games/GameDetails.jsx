@@ -120,10 +120,10 @@ constructor(props){
           <button onClick={this.joinGame}>Join Game</button>
         }
 
-        {/* {
+        {
           winner &&
           <p>Winner: {users[winner].firstName}</p>
-        } */}
+        }
 
         <hr />
 
