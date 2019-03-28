@@ -2,7 +2,8 @@ import React from 'react'
 import './Board.css'
 import bird from '../../images/pink-bird.png'; 
 import fly from '../../images/grey-fly.png';
-import monster from '../../images/blue-monster.png';
+import blueMonster from '../../images/blue-monster.png';
+import greenMonster from '../../images/green-monster.png';
 
 const renderCel = (makeMove, rowIndex, cellIndex, symbol, hasTurn) => {
   return (
@@ -11,7 +12,7 @@ const renderCel = (makeMove, rowIndex, cellIndex, symbol, hasTurn) => {
       disabled={hasTurn}
       onClick={() => makeMove(rowIndex, cellIndex)}
       key={`${rowIndex}-${cellIndex}`}
-    > {symbol === 'x'? <img id = 'bird' src={bird}/> : symbol === 'o'? <img id = 'fly' src={fly}/> : symbol === 'm'? <img id = 'monster' src={monster}/>: ' '}
+    > {symbol === 'x'? <img id = 'bird' src={bird}/> : symbol === 'o'? <img id = 'fly' src={fly}/> : symbol === 'm'? <img id = 'monster' src={blueMonster}/> : symbol === 'w'? <img id = 'monster' src={greenMonster}/>: ' '}
         </button>
       
   )
