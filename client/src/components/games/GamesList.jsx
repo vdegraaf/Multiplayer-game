@@ -51,6 +51,7 @@ class GamesList extends PureComponent {
   }
 
   render() {
+   
     const {games, users, authenticated, createGame} = this.props
 
     if (!authenticated) return (
@@ -59,7 +60,9 @@ class GamesList extends PureComponent {
 
     if (games === null || users === null) return null
 
-    return (<Paper className="outer-paper">
+    return (
+      
+    <Paper className="outer-paper">
       <Button
         color="primary"
         variant="contained"

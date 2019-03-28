@@ -10,7 +10,6 @@ import './GameDetails.css'
 import moves from './Logic'
 import { MonsterOneMove } from './Monsters'
 
-
 class GameDetails extends PureComponent {
 constructor(props){
   super(props)
@@ -102,7 +101,7 @@ constructor(props){
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
 
-    return (
+    return (<div>
       <Paper className="outer-paper">
         <input />
         <h1>Game #{game.id}</h1>
@@ -132,7 +131,8 @@ constructor(props){
           game.status !== 'pending' &&
           <Board board={game.board} makeMove={this.makeMove} />
         }
-      </Paper>)
+      </Paper></div>)
+      
   }
 }
 

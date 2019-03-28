@@ -1,17 +1,18 @@
 import React from 'react'
 import './Board.css'
+import bird from '../../images/pink-bird.png'; 
+import fly from '../../images/grey-fly.png';
 
 const renderCel = (makeMove, rowIndex, cellIndex, symbol, hasTurn) => {
-
   return (
-
     <button
       className="board-tile"
       disabled={hasTurn}
       onClick={() => makeMove(rowIndex, cellIndex)}
       key={`${rowIndex}-${cellIndex}`}
-    >{symbol || '-'}
+    > {symbol === 'x'? <img id = 'bird' src={bird}/> : symbol === 'o'? <img id = 'fly' src={fly}/> : ' '}
         </button>
+      
   )
 }
 
