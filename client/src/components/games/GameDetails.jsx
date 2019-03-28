@@ -78,7 +78,7 @@ constructor(props){
     }))
 
     newBoard[player.position_row][player.position_column] = player.symbol
-
+    console.log(player, 'im the player that makes a move')
     const newBoard2 = MonsterOneMove(newBoard)
 
     updateGame(game.id, newBoard2, player)
