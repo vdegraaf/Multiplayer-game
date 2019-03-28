@@ -18,9 +18,7 @@ constructor(props){
 }
 
 handleKeyPress = (event) => {
-  // const {game, userId} = this.props
-  // const player = game.players.find(p => p.userId === userId)
-  // hij haalt hier de player uit GAME ipv DATABSAE
+
   if(event.keyCode === 38){
     this.makeMove(moves.UP)
   }

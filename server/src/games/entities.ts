@@ -34,10 +34,6 @@ export class Game extends BaseEntity {
   players: Player[]
   // There might be something worng with this relation, it does not update with the proper Player Position form DB
 
-  hallo = () => {
-    console.log('hallo')
-  }
-
 }
 
 @Entity()

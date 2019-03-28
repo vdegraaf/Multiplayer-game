@@ -13,26 +13,22 @@ function newCoordinates (numberOfRows, minColumn, maxColumn) {
   }
 }
 
-function removePreviousMonster(game, monster) {
-  game.board.map(row => row.map(cell => {
+function removePreviousMonster(board, monster) {
+  return board.map(row => row.map(cell => {
   if (cell === monster.symbol) {
-    return cell = null
+    cell = null
   }
-  if (cell === null) {
-    return cell = null
-  } if (cell !== monster.symbol) {
+  if (cell !== monster.symbol) {
     return cell
   }
 }))
 }
 
 function MonsterOneMove (currentBoard){
-  console.log(currentBoard, 'this monsterMove is called')
-  // let newBoard = removePreviousMonster(currentGame, monsterOne)
+  const newBoard = removePreviousMonster(currentBoard, monsterOne)
   const newCoordinatesMonster = newCoordinates(monsterOne.rows, monsterOne.columns[0], monsterOne.columns[1])
-  
-  currentBoard[newCoordinatesMonster.row][newCoordinatesMonster.column] = monsterOne.symbol
-  return currentBoard
+  newBoard[newCoordinatesMonster.row][newCoordinatesMonster.column] = monsterOne.symbol
+  return newBoard
 }
 
 export { MonsterOneMove }
