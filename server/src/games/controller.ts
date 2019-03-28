@@ -4,7 +4,12 @@ import {
 } from 'routing-controllers'
 import User from '../users/entity'
 import { Game, Player, Board } from './entities'
-// import { IsBoard, isValidTransition, calculateWinner, finished } from './logic'
+import {
+  IsBoard,
+  //  isValidTransition,
+  calculateWinner,
+  // finished
+} from './logic'
 import { Validate } from 'class-validator'
 import { io } from '../index'
 
@@ -48,8 +53,6 @@ export default class GameController {
 
     const game: any = await Game.findOneById(entity.id)
 
-    // game.board = MonsterOneMove(game)
-    // console.log(game.board,'im the game.board after MonsterOneMove')
     game.board = move(game.board, player.position_row, player.position_column, player.symbol)
     await game.save()
 
@@ -110,16 +113,13 @@ export default class GameController {
 
     const game: any = await Game.findOneById(gameId)
     if (!game) throw new NotFoundError(`Game does not exist`)
-    
-    
 
-    
     const player: any = await Player.findOne({ user, game })
-  
-   
+
+
     if (!player) throw new ForbiddenError(`You are not part of this game`)
     if (game.status !== 'started') throw new BadRequestError(`The game is not started yet`)
-    
+
     // if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
 
     // if (!isValidTransition(player.symbol, game.board, update.board)) {
@@ -127,42 +127,33 @@ export default class GameController {
     // }    
 
 
-    // const winner = calculateWinner(update.board)
-    // if (winner) {
-    //   game.winner = winner
-    //   game.status = 'finished'
-    // }
-    // else if (finished(update.board)) {  
-    //   game.status = 'finished'
-    // }
-    
-    if(update.player){
-      
+
+
+    if (update.player) {
+
       player.position_column = update.player.position_column
       player.position_row = update.player.position_row
       await player.save()
     }
-  
+
     const game2: any = await Game.findOneById(gameId)
-    if(update.board){
-      
+    if (update.board) {
+
       game2.board = update.board
-     
+
       // game.turn = player.symbol === 'x' ? 'o' : 'x'
 
-      
+
     }
 
-    
-    
-    await game2.save()
-    
+    const winner: any = calculateWinner(game2.board)
+  
+      if (winner) {
+        game2.winner = winner
+        game2.status = 'finished'
+      }
 
-    // console.log(player, 'im the player saved in DB')
-    // console.log(game, 'im the game saved in DB')
-    // GAME NEEDS TO SYNCHRONIZE WITH PLAYER HERE!!
-    // game.player is not equal to player saved in DB, 
-    // so Redux is behind
+    await game2.save()
 
     io.emit('action', {
       type: 'UPDATE_GAME',
