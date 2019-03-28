@@ -16,4 +16,7 @@ h2 {
   margin-top: 20px;
   padding: 20px;
   width: 60%;
+  background-image: url('../../images/background.png');
+  background-repeat: no-repeat;
+  
 }

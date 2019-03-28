@@ -9,7 +9,6 @@ import Board from './Board'
 import './GameDetails.css'
 import moves from './Logic'
 
-
 class GameDetails extends PureComponent {
   constructor(props) {
     super(props)
@@ -102,7 +101,7 @@ class GameDetails extends PureComponent {
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
 
-    return (
+    return (<div>
       <Paper className="outer-paper">
         <input />
         <h1>Game #{game.id}</h1>
@@ -132,7 +131,8 @@ class GameDetails extends PureComponent {
           game.status !== 'pending' &&
           <Board board={game.board} makeMove={this.makeMove} />
         }
-      </Paper>)
+      </Paper></div>)
+      
   }
 }
 
