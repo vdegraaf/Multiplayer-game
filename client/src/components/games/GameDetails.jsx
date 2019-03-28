@@ -77,13 +77,11 @@ constructor(props){
       }
     }))
 
-    newBoard[player.position_row][player.position_column] = player.symbol
+    const boardPlusPlayer = MonsterMove(newBoard, player)
+    
+    boardPlusPlayer.newBoard2[boardPlusPlayer.player.position_row][boardPlusPlayer.player.position_column] = player.symbol
 
-
-    const newBoard2 = MonsterMove(newBoard)
-
-
-    updateGame(game.id, newBoard2, player)
+    updateGame(game.id, boardPlusPlayer.newBoard2, boardPlusPlayer.player)
   }
 
 
