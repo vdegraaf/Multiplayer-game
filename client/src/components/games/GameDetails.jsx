@@ -17,19 +17,20 @@ constructor(props){
 }
 
 handleKeyPress = (event) => {
-  const {game, userId} = this.props
-  const player = game.players.find(p => p.userId === userId)
+  // const {game, userId} = this.props
+  // const player = game.players.find(p => p.userId === userId)
+  // hij haalt hier de player uit GAME ipv DATABSAE
   if(event.keyCode === 38){
-    this.makeMove(player, moves.UP)
+    this.makeMove(moves.UP)
   }
   if(event.keyCode === 37){
-    this.makeMove(player, moves.LEFT)
+    this.makeMove(moves.LEFT)
   }
   if(event.keyCode === 40){
-    this.makeMove(player, moves.DOWN)
+    this.makeMove(moves.DOWN)
   }
   if(event.keyCode === 39){
-    this.makeMove(player, moves.RIGHT)
+    this.makeMove( moves.RIGHT)
   }
 }
   componentDidMount(){
@@ -49,24 +50,21 @@ handleKeyPress = (event) => {
 
   joinGame = () => this.props.joinGame(this.props.game.id)
 
-  makeMove = (player, move) => {
+  makeMove = (move) => {
     
-    const {game, updateGame} = this.props
+    const {game, userId, updateGame} = this.props
+    const player = game.players.find(p => p.userId === userId)
 
-
-    console.log(game.turn, 'im the game.turn')
     player.position_row = player.position_row +move.y
     player.position_column = player.position_column +move.x
 
-    
-
     const newBoard = game.board.map(row => row.map(cell => {
-        if (cell === game.turn) {
+        if (cell === player.symbol) {
           return cell = null
         }
         if (cell === null) {
           return cell = null
-        } if (cell !== game.turn) {
+        } if (cell !== player.symbol) {
           return cell
         }
       }))
@@ -76,18 +74,6 @@ handleKeyPress = (event) => {
     updateGame(game.id, newBoard, player)
   }
 
-
-
-  // const plainBoard = game.board.map(row => row.map(cell => {
-  //   if (cell === game.turn) {
-  //     return cell = null
-  //   }
-  //   if (cell === null) {
-  //     return cell = null
-  //   } if (cell !== game.turn) {
-  //     return cell
-  //   }
-  // }))
 
   render() {
     const {game, users, authenticated, userId} = this.props

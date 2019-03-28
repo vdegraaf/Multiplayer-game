@@ -32,6 +32,7 @@ export class Game extends BaseEntity {
   // http://typeorm.io/#/many-to-one-one-to-many-relations
   @OneToMany(_ => Player, player => player.game, {eager:true})
   players: Player[]
+  // There might be something worng with this relation, it does not update with the proper Player Position form DB
 }
 
 @Entity()
