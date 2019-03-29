@@ -16,10 +16,15 @@ constructor(props){
   this.keyPress = this.handleKeyPress.bind(this)
   this.state = {
     m3: {
+      row: -1,
+      column: 9,
+      symbol: 'p'
+    },
+    m4: {
       row: 0,
       column: 9,
       symbol: 'p'
-    }
+    },
   }
 }
 
@@ -84,10 +89,10 @@ constructor(props){
         return cell
       }
     }))
-    console.log(this.state, 'im the state before monster move')
+    
     const boardPlusPlayer = MonsterMove(newBoard, player, this.state.m3)
     this.setState({ m3: { ...this.state.m3, row: boardPlusPlayer.m3.row} })
-    console.log(newBoard)
+    
 
     boardPlusPlayer.newBoard3[boardPlusPlayer.player.position_row][boardPlusPlayer.player.position_column] = player.symbol
 

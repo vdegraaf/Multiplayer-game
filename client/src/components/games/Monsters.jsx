@@ -79,18 +79,20 @@ function MonsterMove(currentBoard, player, m3) {
 
   const newBoard2 = removePreviousMonster(newBoard, monsterTwo)
   const newCoordinatesMonster2 = newCoordinates(monsterTwo.rows, monsterTwo.columns[0], monsterTwo.columns[1])
+  console.log(newCoordinatesMonster2, 'im new coordinates monster2')
   newBoard2[newCoordinatesMonster2.row][newCoordinatesMonster2.column] = monsterTwo.symbol
   collision(player, newCoordinatesMonster2)
 
   // console.log(m3.symbol , 'im the sumbol of 3')
-  console.log(newBoard2, 'im newboard2', m3,'im monster 3')
+  
   const newBoard3 = removePreviousMonster(newBoard2, m3)
   
   m3.row = monsterThree(m3)
-  const monsterThreeCoordinates = {row: m3.row, column: m3.colum}
+  const monsterThreeCoordinates = {row: m3.row, column: m3.column}
+  console.log(monsterThreeCoordinates, 'im mosnter3 coordinates')
   newBoard3[m3.row][m3.column] = m3.symbol
   collision(player, monsterThreeCoordinates)
-  console.log(newBoard3, 'im the newboard3')
+  
   return {
     newBoard3,
     player,
