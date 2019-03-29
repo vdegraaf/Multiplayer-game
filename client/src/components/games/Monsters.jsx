@@ -10,6 +10,8 @@ const monsterTwo = {
   symbol: 'w'
 }
 
+
+
 function newCoordinates(numberOfRows, minColumn, maxColumn) {
   const row = Math.floor(Math.random() * numberOfRows)
   const column = Math.floor(Math.random() * (maxColumn - minColumn) + minColumn)
@@ -59,7 +61,16 @@ function collision(player, newMonsterCoordinates) {
   return player
 }
 
-function MonsterMove(currentBoard, player) {
+function monsterThree (m3) {
+  if(m3.row < 9){
+    return m3.row+1
+  } else return m3.row = 0
+  
+}
+
+function MonsterMove(currentBoard, player, m3) {
+
+ 
 
   const newBoard = removePreviousMonster(currentBoard, monsterOne)
   const newCoordinatesMonster1 = newCoordinates(monsterOne.rows, monsterOne.columns[0], monsterOne.columns[1])
@@ -71,9 +82,19 @@ function MonsterMove(currentBoard, player) {
   newBoard2[newCoordinatesMonster2.row][newCoordinatesMonster2.column] = monsterTwo.symbol
   collision(player, newCoordinatesMonster2)
 
+  // console.log(m3.symbol , 'im the sumbol of 3')
+  console.log(newBoard2, 'im newboard2', m3,'im monster 3')
+  const newBoard3 = removePreviousMonster(newBoard2, m3)
+  
+  m3.row = monsterThree(m3)
+  const monsterThreeCoordinates = {row: m3.row, column: m3.colum}
+  newBoard3[m3.row][m3.column] = m3.symbol
+  collision(player, monsterThreeCoordinates)
+  console.log(newBoard3, 'im the newboard3')
   return {
-    newBoard2,
-    player
+    newBoard3,
+    player,
+    m3
   }
 }
 

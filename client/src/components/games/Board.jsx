@@ -12,7 +12,8 @@ const renderCel = (makeMove, rowIndex, cellIndex, symbol, hasTurn) => {
       disabled={hasTurn}
       onClick={() => makeMove(rowIndex, cellIndex)}
       key={`${rowIndex}-${cellIndex}`}
-    > {symbol === 'x'? <img id = 'bird' src={bird}/> : symbol === 'o'? <img id = 'fly' src={fly}/> : symbol === 'm'? <img id = 'monster' src={blueMonster}/> : symbol === 'w'? <img id = 'monster' src={greenMonster}/>: ' '}
+    > {symbol === 'x'? <img id = 'bird' src={bird}/> : symbol === 'o'? 
+    <img id = 'fly' src={fly}/> : symbol === 'm'? <img id = 'monster' src={blueMonster}/> : symbol === 'w'? <img id = 'monster' src={greenMonster}/> : symbol === 'p'? <img id = 'monster' src={greenMonster}/> : ' '}
         </button>
       
   )

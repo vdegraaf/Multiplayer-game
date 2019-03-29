@@ -14,6 +14,13 @@ class GameDetails extends PureComponent {
 constructor(props){
   super(props)
   this.keyPress = this.handleKeyPress.bind(this)
+  this.state = {
+    m3: {
+      row: 0,
+      column: 9,
+      symbol: 'p'
+    }
+  }
 }
 
   handleKeyPress = (event) => {
@@ -34,6 +41,7 @@ constructor(props){
 
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress, false)
+    
   }
 
   componentWillUnmount() {
@@ -76,13 +84,16 @@ constructor(props){
         return cell
       }
     }))
+    console.log(this.state, 'im the state before monster move')
+    const boardPlusPlayer = MonsterMove(newBoard, player, this.state.m3)
+    this.setState({ m3: { ...this.state.m3, row: boardPlusPlayer.m3.row} })
+    console.log(newBoard)
 
-    const boardPlusPlayer = MonsterMove(newBoard, player)
-    
-    boardPlusPlayer.newBoard2[boardPlusPlayer.player.position_row][boardPlusPlayer.player.position_column] = player.symbol
+    boardPlusPlayer.newBoard3[boardPlusPlayer.player.position_row][boardPlusPlayer.player.position_column] = player.symbol
 
-    updateGame(game.id, boardPlusPlayer.newBoard2, boardPlusPlayer.player)
+    updateGame(game.id, boardPlusPlayer.newBoard3, boardPlusPlayer.player)
   }
+
 
 
   render() {
