@@ -25,6 +25,36 @@ constructor(props){
       column: 9,
       symbol: 'p'
     },
+    m5: {
+      row: 1,
+      column: 9,
+      symbol: 'p'
+    },
+    m6: {
+      row: 2,
+      column: 9,
+      symbol: 'p'
+    },
+    m7: {
+      row: 9,
+      column: 11,
+      symbol: 'p'
+    },
+    m8: {
+      row: 8,
+      column: 11,
+      symbol: 'p'
+    },
+    m9: {
+      row: 7,
+      column: 11,
+      symbol: 'p'
+    },
+    m10: {
+      row: 6,
+      column: 11,
+      symbol: 'p'
+    },
   }
 }
 
@@ -90,16 +120,23 @@ constructor(props){
       }
     }))
     
-    console.log(this.state.m4 , 'im m4 in GameDetails')
-    const boardPlusPlayer = MonsterMove(newBoard, player, this.state.m3, this.state.m4)
+    
+    const boardPlusPlayer = MonsterMove(newBoard, player, this.state.m3, this.state.m4, this.state.m5, this.state.m6,
+      this.state.m7, this.state.m8, this.state.m9, this.state.m10)
     this.setState({ 
       m3: { ...this.state.m3, row: boardPlusPlayer.m3.row},
-      m4: { ...this.state.m4, row: boardPlusPlayer.m4.row}
+      m4: { ...this.state.m4, row: boardPlusPlayer.m4.row},
+      m5: { ...this.state.m5, row: boardPlusPlayer.m5.row},
+      m6: { ...this.state.m6, row: boardPlusPlayer.m6.row},
+      m7: { ...this.state.m7, row: boardPlusPlayer.m7.row},
+      m8: { ...this.state.m8, row: boardPlusPlayer.m8.row},
+      m9: { ...this.state.m9, row: boardPlusPlayer.m9.row},
+      m10: { ...this.state.m10, row: boardPlusPlayer.m10.row},
     })
-    console.log(this.state, 'im the state after monstermoves')
+    
 
     boardPlusPlayer.newBoard3[boardPlusPlayer.player.position_row][boardPlusPlayer.player.position_column] = player.symbol
-    console.log(boardPlusPlayer.newBoard3, 'im newboard3 in GameDetails')
+    
     updateGame(game.id, boardPlusPlayer.newBoard3, boardPlusPlayer.player)
   }
 
