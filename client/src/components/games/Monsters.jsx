@@ -128,7 +128,7 @@ function MonsterMove(currentBoard, player, m3, m4, m5, m6, m7, m8, m9, m10) {
   newBoard3[m10.row][m10.column] = m10.symbol
   collision(player, monsterTenCoordinates)
 
-  console.log(newBoard3)
+
   return {
     newBoard3,
     player,
