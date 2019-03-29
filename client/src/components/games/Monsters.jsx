@@ -61,14 +61,14 @@ function collision(player, newMonsterCoordinates) {
   return player
 }
 
-function monsterThree (m3) {
-  if(m3.row < 9){
-    return m3.row+1
-  } else return m3.row = 0
+function monsterThree (m) {
+  if(m.row < 9){
+    return m.row+1
+  } else return m.row = 0
   
 }
 
-function MonsterMove(currentBoard, player, m3) {
+function MonsterMove(currentBoard, player, m3, m4) {
 
  
 
@@ -79,24 +79,29 @@ function MonsterMove(currentBoard, player, m3) {
 
   const newBoard2 = removePreviousMonster(newBoard, monsterTwo)
   const newCoordinatesMonster2 = newCoordinates(monsterTwo.rows, monsterTwo.columns[0], monsterTwo.columns[1])
-  console.log(newCoordinatesMonster2, 'im new coordinates monster2')
   newBoard2[newCoordinatesMonster2.row][newCoordinatesMonster2.column] = monsterTwo.symbol
   collision(player, newCoordinatesMonster2)
 
-  // console.log(m3.symbol , 'im the sumbol of 3')
-  
   const newBoard3 = removePreviousMonster(newBoard2, m3)
-  
   m3.row = monsterThree(m3)
   const monsterThreeCoordinates = {row: m3.row, column: m3.column}
-  console.log(monsterThreeCoordinates, 'im mosnter3 coordinates')
   newBoard3[m3.row][m3.column] = m3.symbol
   collision(player, monsterThreeCoordinates)
-  
+
+  console.log(m4, 'im m4')
+  // const newBoard4 = removePreviousMonster(newBoard3, m4)
+  m4.row = monsterThree(m4)
+  const monsterFourCoordinates = {row: m4.row, column: m4.column}
+  newBoard3[m4.row][m4.column] = m4.symbol
+  collision(player, monsterFourCoordinates)
+
+  console.log(newBoard3, 'im newboard3 in Monsters')
+
   return {
     newBoard3,
     player,
-    m3
+    m3,
+    m4
   }
 }
 

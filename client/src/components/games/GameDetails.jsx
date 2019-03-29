@@ -90,12 +90,16 @@ constructor(props){
       }
     }))
     
-    const boardPlusPlayer = MonsterMove(newBoard, player, this.state.m3)
-    this.setState({ m3: { ...this.state.m3, row: boardPlusPlayer.m3.row} })
-    
+    console.log(this.state.m4 , 'im m4 in GameDetails')
+    const boardPlusPlayer = MonsterMove(newBoard, player, this.state.m3, this.state.m4)
+    this.setState({ 
+      m3: { ...this.state.m3, row: boardPlusPlayer.m3.row},
+      m4: { ...this.state.m4, row: boardPlusPlayer.m4.row}
+    })
+    console.log(this.state, 'im the state after monstermoves')
 
     boardPlusPlayer.newBoard3[boardPlusPlayer.player.position_row][boardPlusPlayer.player.position_column] = player.symbol
-
+    console.log(boardPlusPlayer.newBoard3, 'im newboard3 in GameDetails')
     updateGame(game.id, boardPlusPlayer.newBoard3, boardPlusPlayer.player)
   }
 
