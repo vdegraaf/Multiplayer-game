@@ -76,11 +76,13 @@ constructor(props){
 
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress, false)
+    this.interval = setInterval(() => this.monsterBoard(), 1000);
     
   }
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyPress, false);
+    clearInterval(this.interval);
   }
 
   componentWillMount() {
@@ -90,10 +92,50 @@ constructor(props){
     }
   }
 
+  // const boardPlusPlayer = 
+  // //interval
+  // MonsterMove(newBoard, player, this.state.m3, this.state.m4, this.state.m5, this.state.m6,
+  //   this.state.m7, this.state.m8, this.state.m9, this.state.m10)
+  // this.setState({ 
+  //   m3: { ...this.state.m3, row: boardPlusPlayer.m3.row},
+  //   m4: { ...this.state.m4, row: boardPlusPlayer.m4.row},
+  //   m5: { ...this.state.m5, row: boardPlusPlayer.m5.row},
+  //   m6: { ...this.state.m6, row: boardPlusPlayer.m6.row},
+  //   m7: { ...this.state.m7, row: boardPlusPlayer.m7.row},
+  //   m8: { ...this.state.m8, row: boardPlusPlayer.m8.row},
+  //   m9: { ...this.state.m9, row: boardPlusPlayer.m9.row},
+  //   m10: { ...this.state.m10, row: boardPlusPlayer.m10.row},
+  // })
+
+  monsterBoard = () => {
+    const { game, userId, updateGame } = this.props
+    const player = game.players.find(p => p.userId === userId)
+
+      const boardPlusPlayer = 
+  //interval
+  MonsterMove(game.board, player, this.state.m3, this.state.m4, this.state.m5, this.state.m6,
+    this.state.m7, this.state.m8, this.state.m9, this.state.m10)
+  this.setState({ 
+    m3: { ...this.state.m3, row: boardPlusPlayer.m3.row},
+    m4: { ...this.state.m4, row: boardPlusPlayer.m4.row},
+    m5: { ...this.state.m5, row: boardPlusPlayer.m5.row},
+    m6: { ...this.state.m6, row: boardPlusPlayer.m6.row},
+    m7: { ...this.state.m7, row: boardPlusPlayer.m7.row},
+    m8: { ...this.state.m8, row: boardPlusPlayer.m8.row},
+    m9: { ...this.state.m9, row: boardPlusPlayer.m9.row},
+    m10: { ...this.state.m10, row: boardPlusPlayer.m10.row},
+  })
+
+
+  updateGame(game.id, boardPlusPlayer.newBoard3, boardPlusPlayer.player)
+
+  }
+
+
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   makeMove = (move) => {
-
+  
     const { game, userId, updateGame } = this.props
     const player = game.players.find(p => p.userId === userId)
 
@@ -120,26 +162,29 @@ constructor(props){
       }
     }))
     
+    newBoard[player.position_row][player.position_column] = player.symbol
     
-    const boardPlusPlayer = MonsterMove(newBoard, player, this.state.m3, this.state.m4, this.state.m5, this.state.m6,
-      this.state.m7, this.state.m8, this.state.m9, this.state.m10)
-    this.setState({ 
-      m3: { ...this.state.m3, row: boardPlusPlayer.m3.row},
-      m4: { ...this.state.m4, row: boardPlusPlayer.m4.row},
-      m5: { ...this.state.m5, row: boardPlusPlayer.m5.row},
-      m6: { ...this.state.m6, row: boardPlusPlayer.m6.row},
-      m7: { ...this.state.m7, row: boardPlusPlayer.m7.row},
-      m8: { ...this.state.m8, row: boardPlusPlayer.m8.row},
-      m9: { ...this.state.m9, row: boardPlusPlayer.m9.row},
-      m10: { ...this.state.m10, row: boardPlusPlayer.m10.row},
-    })
+    // const boardPlusPlayer = 
+    // //interval
+    // MonsterMove(newBoard, player, this.state.m3, this.state.m4, this.state.m5, this.state.m6,
+    //   this.state.m7, this.state.m8, this.state.m9, this.state.m10)
+    // this.setState({ 
+    //   m3: { ...this.state.m3, row: boardPlusPlayer.m3.row},
+    //   m4: { ...this.state.m4, row: boardPlusPlayer.m4.row},
+    //   m5: { ...this.state.m5, row: boardPlusPlayer.m5.row},
+    //   m6: { ...this.state.m6, row: boardPlusPlayer.m6.row},
+    //   m7: { ...this.state.m7, row: boardPlusPlayer.m7.row},
+    //   m8: { ...this.state.m8, row: boardPlusPlayer.m8.row},
+    //   m9: { ...this.state.m9, row: boardPlusPlayer.m9.row},
+    //   m10: { ...this.state.m10, row: boardPlusPlayer.m10.row},
+    // })
+    // tot hier
     
 
-    boardPlusPlayer.newBoard3[boardPlusPlayer.player.position_row][boardPlusPlayer.player.position_column] = player.symbol
+    //boardPlusPlayer.newBoard3[boardPlusPlayer.player.position_row][boardPlusPlayer.player.position_column] = player.symbol
     
-    updateGame(game.id, boardPlusPlayer.newBoard3, boardPlusPlayer.player)
+    updateGame(game.id, newBoard, player)
   }
-
 
 
   render() {
