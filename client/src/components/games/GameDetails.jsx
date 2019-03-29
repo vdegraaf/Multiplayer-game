@@ -37,22 +37,22 @@ constructor(props){
     },
     m7: {
       row: 9,
-      column: 11,
+      column: 12,
       symbol: 'p'
     },
     m8: {
       row: 8,
-      column: 11,
+      column: 12,
       symbol: 'p'
     },
     m9: {
       row: 7,
-      column: 11,
+      column: 12,
       symbol: 'p'
     },
     m10: {
       row: 6,
-      column: 11,
+      column: 12,
       symbol: 'p'
     },
   }

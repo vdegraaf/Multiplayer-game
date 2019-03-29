@@ -1,29 +1,23 @@
-# Multiplayer Tic Tac Toe
 
-This repo contains a frontend and backend for a multiplayer tic tac toe game. It uses Typescript, Koa, routing-controllers and TypeORM in the backend and React/Redux in the frontend. The backend exposes a REST API but also sends messages over websockets using SocketIO. 
+TWO PLAYER GAME
 
-![example](https://cd.sseu.re/tictactoe-low.gif)
+To start our app:
 
-## Getting Started
+1) git clone repro
+2) cd to /server and run 'npm install'
+3) in same terminal, run 'npm run dev'. Leave open.
+  - a server 
+4) run a local Postgres DB
+5) make sure the server connects to the same port as the local postgres
 
-### Postgres Database
+4) cd to /client and run 'npm install'
+5) in same terminal, run 'npm run start'. Leave open
+  - a browser should be opened with the game
+6) open a incognito window and browse to the same localhost
+7) you're good to go!
 
-Start a Postgres container using the following Docker command:
-
-```bash
-$ docker run \
-  --rm \
-  -e POSTGRES_PASSWORD=secret \
-  -p 5432:5432 \
-  postgres
-```
-
-### TypeStack Server
-
-Then `cd` into the `server` directory and run `npm install` to install the dependencies.
-
-Start the server with the `npm run dev`
-
-### React Client
-
-Open another terminal session and `cd` into the `client` directory, then run `npm install` to install dependencies and run `npm start` to start the dev server.
+TO PLAY ON DIFFERENT COMPUTERS
+1) run everything above on one computer.
+2) change the 'localhost' in /client/src/constant to your local IP adres
+3) change the 'localhost' in /server/src/DB to your local IP
+4) in next computer browse to the IP:{port}/games
