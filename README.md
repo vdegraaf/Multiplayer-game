@@ -1,6 +1,6 @@
 # Multiplayer-game
 
-<img src="http://www.giphy.com/gifs/RLmkyUh1AkJ2PnDCpt.gif" width="200" height="200" />
+<img src="https://giphy.com/gifs/game-angrybird-RLmkyUh1AkJ2PnDCpt" width="200" height="200" />
 
 In week 7 of the Codaisseur Academy we were challenged to build a multiplayer game upon a Tic-Tac-Toe logic which was provided. What we did was:
 
