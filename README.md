@@ -40,3 +40,8 @@ TO PLAY ON DIFFERENT COMPUTERS
 2) change the 'localhost' in /client/src/constant to your local IP adres
 3) change the 'localhost' in /server/src/DB to your local IP
 4) in next computer browse to the IP:{port}/games
+
+## Auhtors
+
+* **Danielle Repko** - *Initial work* - [drepko](https://github.com/drepko)
+* **Vincent de Graaf** - *Initial work* - [vdegraaf](https://github.com/vdegraaf)
