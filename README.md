@@ -1,6 +1,6 @@
 # Multiplayer-game
 
-<img src="https://media.giphy.com/media/RLmkyUh1AkJ2PnDCpt/giphy.gif" width="200" height="200" />
+<img src="https://media.giphy.com/media/RLmkyUh1AkJ2PnDCpt/giphy.gif" width="880" height="500" />
 
 In week 7 of the Codaisseur Academy we were challenged to build a multiplayer game upon a Tic-Tac-Toe logic which was provided. What we did was:
 
